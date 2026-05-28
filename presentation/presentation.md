@@ -1,24 +1,10 @@
-# Automation ML Diamonds - Presentation Notes
+# Automation ML Diamonds - Presentation
 
-## 1. Project Topic
+## Slide 1. Business Task
 
-Prediction of diamond price using a tabular regression model and a reproducible MLOps pipeline.
+Goal: predict the price of a diamond from its physical and quality characteristics.
 
-Course focus: automation of machine learning, not only model training.
-
-## 2. Why Diamonds Dataset
-
-- Simple and understandable tabular data.
-- Clear regression target: `price`.
-- Mix of numeric and categorical features.
-- Good fit for demonstrating ETL, preprocessing, feature engineering, API, tests, Docker, CI/CD, and monitoring.
-- Less complex than NLP, so the project can focus on MLOps workflow quality.
-
-Dataset source: Kaggle Diamonds Dataset.
-
-## 3. Business Task
-
-Given diamond characteristics:
+Input features:
 
 - carat;
 - cut;
@@ -26,11 +12,27 @@ Given diamond characteristics:
 - clarity;
 - depth;
 - table;
-- x, y, z dimensions;
+- x, y, z dimensions.
 
-predict the expected price of a diamond.
+Target: `price`
 
-## 4. ML Pipeline
+This is a regression task.
+
+## Slide 2. Data
+
+Dataset: Kaggle Diamonds Dataset.
+
+Why this dataset was chosen:
+
+- simple tabular data;
+- clear regression target;
+- numeric and categorical features;
+- easy to explain during a course defense;
+- suitable for demonstrating ETL, preprocessing, API, testing, Docker, CI/CD, and monitoring.
+
+If the full Kaggle CSV is missing, the project creates a deterministic sample dataset for local demo and tests.
+
+## Slide 3. ML System Architecture
 
 ```text
 Raw CSV
@@ -39,9 +41,9 @@ Raw CSV
 -> feature engineering
 -> train/test split
 -> model training
--> metrics
+-> metrics and baseline
 -> saved model
--> FastAPI prediction service
+-> FastAPI service
 ```
 
 Feature engineering:
@@ -52,23 +54,18 @@ density = carat / (volume + 0.001)
 depth_to_width = depth / (x + 0.001)
 ```
 
-## 5. Model
+## Slide 4. Model And Metrics
 
 Model: `RandomForestRegressor`
 
 Why this model:
 
 - stable baseline for tabular regression;
-- works well with non-linear relationships;
+- handles non-linear relationships;
 - easy to explain;
-- available in scikit-learn;
 - does not require heavy optional dependencies.
 
-## 6. Current Metrics
-
-Metrics are calculated after real training, not hardcoded.
-
-Current demo metrics on the generated sample dataset:
+Current demo metrics:
 
 | Metric | Value |
 | --- | ---: |
@@ -77,123 +74,50 @@ Current demo metrics on the generated sample dataset:
 | R2 | 0.9631 |
 | MAPE | 7.0597 |
 
-If the full Kaggle CSV is used, metrics may change.
+Metrics are calculated after real model training and are not hardcoded.
 
-## 7. API
+## Slide 5. Testing, Docker, CI/CD
 
-FastAPI endpoints:
+Testing:
 
-- `GET /` - API entry point.
-- `GET /health` - health status, model status, CPU/RAM/disk metrics.
-- `POST /predict` - diamond price prediction.
-- `GET /model/info` - model path, metrics, and feature list.
+- `18 passed`;
+- tests use small synthetic DataFrames;
+- tests cover ETL, feature engineering, model training, API behavior, and monitoring.
 
-Important behavior:
+Docker:
 
-- API import does not fail if model is missing.
-- `/predict` returns HTTP 503 with a clear message if the model has not been trained.
-- Input validation is handled by Pydantic/FastAPI.
+- `docker compose build`;
+- `docker compose up`;
+- API runs on port `8000`.
 
-## 8. Testing
+CI/CD:
 
-Tests use small synthetic DataFrames, so they do not require the full Kaggle dataset.
-
-Covered areas:
-
-- data validation;
-- cleaning;
-- feature engineering;
-- model training artifacts;
-- metrics calculation;
-- API success path;
-- API failure path without model;
-- API input validation;
-- data drift detection;
-- degradation detection;
-- infrastructure metrics.
-
-Current result:
-
-```text
-18 passed
-```
-
-## 9. Monitoring
-
-Monitoring is lightweight and educational:
-
-- baseline model metrics are saved;
-- numeric feature profiles are saved;
-- data drift is detected by relative mean shift;
-- degradation is detected by RMSE increase and R2 drop;
-- infrastructure metrics are collected with `psutil`.
-
-This is not a production monitoring platform, but it demonstrates the main MLOps monitoring ideas clearly.
-
-## 10. Docker
-
-Docker demonstrates reproducible environment setup:
-
-- installs dependencies;
-- runs ETL and model training during image build;
-- starts FastAPI on port `8000`;
-- includes a container healthcheck.
-
-Main commands:
-
-```bash
-docker compose build
-docker compose up
-```
-
-## 11. CI/CD
-
-GitHub Actions workflow:
-
-- checks out the repository;
-- sets up Python;
-- uses pip cache;
-- installs dependencies;
-- compiles Python source files;
+- GitHub Actions installs dependencies;
+- compiles source files;
 - runs pytest;
 - builds Docker image.
 
-There is no deploy step because this is a course project and should remain easy to run locally.
+## Slide 6. Monitoring
 
-## 12. What Was Automated
+Monitoring is intentionally lightweight and educational:
 
-- Raw data handling with fallback sample generation.
-- ETL pipeline.
-- Feature engineering.
-- Model training.
-- Metric calculation.
-- Baseline monitoring artifact creation.
-- API service startup.
-- Test execution.
-- Docker image build.
-- CI workflow checks.
+- baseline model metrics;
+- numeric feature profiles;
+- data drift detection by relative mean shift;
+- degradation detection by RMSE increase and R2 drop;
+- CPU, RAM, and disk usage with `psutil`.
 
-## 13. What Was Difficult
+This demonstrates the core monitoring ideas without adding heavy infrastructure.
 
-- Keeping the project useful without overcomplicating it.
-- Making tests independent from the full Kaggle dataset.
-- Ensuring API imports safely before model training.
-- Keeping Docker simple while still demonstrating a full ML workflow.
-- Avoiding fake metrics or fake monitoring.
+## Slide 7. Business Conclusion
 
-## 14. Conclusion
+The project shows a complete educational ML automation workflow:
 
-The project demonstrates a complete educational ML automation pipeline:
+- data processing is reproducible;
+- model metrics are real;
+- predictions are available through FastAPI;
+- tests and CI/CD reduce manual checking;
+- Docker makes the demo easier to reproduce;
+- monitoring provides basic visibility into model and infrastructure state.
 
-- reproducible ETL;
-- preprocessing and feature engineering;
-- real model training;
-- real metrics;
-- FastAPI inference;
-- tests;
-- Docker;
-- CI/CD;
-- monitoring;
-- documentation.
-
-The repository is ready for course demonstration and can be extended later with richer model comparison, coverage reporting, or a monitoring dashboard.
+The project is ready for course submission after adding the GitHub link and required screenshots to the LMS.

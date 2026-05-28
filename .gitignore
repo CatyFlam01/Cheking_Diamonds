@@ -208,7 +208,9 @@ data/raw/*.csv
 data/processed/*.csv
 models/*.joblib
 models/*.json
+models/*.pkl
 reports/monitoring/*.json
+mlruns/
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 !models/.gitkeep

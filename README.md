@@ -12,9 +12,9 @@ Current version: `1.0.0`
 
 The project demonstrates a complete, reproducible ML workflow for a tabular regression task: predicting diamond price (`price`) from the Kaggle Diamonds dataset.
 
-This is intentionally a course/demo project, not an enterprise production system. The focus is on stability, clarity, local reproducibility, tests, Docker, CI/CD, and explainable project structure.
+This is a course/demo project, not an enterprise production system. The focus is on stability, clarity, local reproducibility, tests, Docker, CI/CD, and understandable project structure.
 
-## Project Goal
+## Business Task
 
 Predict diamond price using these input features:
 
@@ -34,20 +34,42 @@ Task type: regression
 
 Dataset: [Kaggle Diamonds Dataset](https://www.kaggle.com/datasets/shivam2503/diamonds)
 
+## Why Diamonds Dataset
+
+- It is a simple and understandable tabular dataset.
+- It contains both numeric and categorical features.
+- It is suitable for regression and easy to explain during a course defense.
+- It allows the project to demonstrate ETL, preprocessing, feature engineering, model training, API, tests, Docker, CI/CD, and monitoring without unnecessary NLP complexity.
+
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    A["Raw data"] --> B["ETL and validation"]
+    B --> C["Cleaning"]
+    C --> D["Feature engineering"]
+    D --> E["Train/test split"]
+    E --> F["Model training"]
+    F --> G["Metrics and baseline"]
+    F --> H["Saved model"]
+    H --> I["FastAPI"]
+    G --> J["Monitoring"]
+    J --> I
+```
+
 ## Pipeline Diagram
 
 ```mermaid
 flowchart LR
-    A["Raw CSV<br/>data/raw/diamonds.csv"] --> B["Validation"]
+    A["data/raw/diamonds.csv"] --> B["Validation"]
     B --> C["Cleaning"]
-    C --> D["Feature Engineering<br/>volume, density, depth_to_width"]
-    D --> E["Train/Test Split"]
-    E --> F["Model Training<br/>RandomForestRegressor"]
-    F --> G["Metrics<br/>RMSE, MAE, R2, MAPE"]
-    F --> H["Saved Model<br/>models/diamond_price_model.joblib"]
-    G --> I["Monitoring Baseline"]
-    H --> J["FastAPI<br/>/predict, /health, /model/info"]
-    I --> J
+    C --> D["volume, density, depth_to_width"]
+    D --> E["data/processed/train.csv and test.csv"]
+    E --> F["RandomForestRegressor"]
+    F --> G["RMSE, MAE, R2, MAPE"]
+    F --> H["models/diamond_price_model.joblib"]
+    G --> I["reports/monitoring/baseline.json"]
+    H --> J["FastAPI /predict"]
 ```
 
 ## What Is Implemented
@@ -93,6 +115,7 @@ flowchart LR
 │   ├── figures/
 │   └── monitoring/
 ├── presentation/
+│   └── presentation.md
 ├── run_pipeline.py
 ├── docker-compose.yml
 ├── requirements.txt
@@ -101,7 +124,7 @@ flowchart LR
 
 ## Quick Start
 
-Create and activate a virtual environment:
+Create and activate a virtual environment on Windows:
 
 ```bash
 python -m venv .venv
@@ -171,10 +194,10 @@ Expected output is a JSON object with real metrics:
 
 ```json
 {
-  "rmse": 589.5855030260885,
-  "mae": 483.1369603844399,
+  "rmse": 589.5855030260883,
+  "mae": 483.1369603844394,
   "r2": 0.9631170911086028,
-  "mape": 7.059739162247627
+  "mape": 7.059739162247622
 }
 ```
 
@@ -209,15 +232,15 @@ Example request body for `POST /predict`:
 
 ```json
 {
-  "carat": 1.0,
+  "carat": 0.5,
   "cut": "Ideal",
   "color": "E",
-  "clarity": "VS1",
-  "depth": 61.0,
-  "table": 57.0,
-  "x": 6.0,
-  "y": 6.1,
-  "z": 3.8
+  "clarity": "SI1",
+  "depth": 61.5,
+  "table": 55,
+  "x": 5.1,
+  "y": 5.0,
+  "z": 3.1
 }
 ```
 
@@ -225,7 +248,8 @@ Example response:
 
 ```json
 {
-  "predicted_price": 6100.25
+  "predicted_price": 4200.25,
+  "message": "Prediction completed successfully."
 }
 ```
 
@@ -245,29 +269,11 @@ Expected current result:
 18 passed
 ```
 
-The tests cover:
-
-- data validation;
-- cleaning;
-- feature engineering;
-- metric calculation;
-- model artifact saving;
-- API health/info/prediction;
-- data drift;
-- degradation detection;
-- infrastructure monitoring metrics.
-
 Optional coverage command if `pytest-cov` is installed:
 
 ```bash
 pytest --cov=src --cov-report=term-missing
 ```
-
-Recommended coverage scope:
-
-- keep synthetic tests small and deterministic;
-- cover ETL, feature engineering, API success/failure paths, training, and monitoring;
-- avoid requiring the full Kaggle CSV in CI.
 
 ## Monitoring
 
@@ -287,7 +293,7 @@ Example output:
 }
 ```
 
-Monitoring is intentionally lightweight and educational. It is enough to demonstrate baseline metrics, drift checks, degradation checks, and system resource checks without requiring external services.
+Monitoring is intentionally lightweight and educational. It demonstrates baseline metrics, drift checks, degradation checks, and system resource checks without external services.
 
 ## Docker
 
@@ -309,8 +315,6 @@ Expected behavior:
 - the image runs ETL and model training during build so the API has a model artifact inside the image;
 - the API starts on port `8000`;
 - docs are available at `http://127.0.0.1:8000/docs`.
-
-If Docker Engine is not running, start Docker Desktop first and retry.
 
 ## CI/CD
 
@@ -362,6 +366,22 @@ Start Docker Desktop, wait until the engine is running, then retry:
 docker compose build
 ```
 
+## Manual Screenshots To Add
+
+Before submitting the project, add screenshots to the report or LMS submission if required:
+
+- Swagger UI at `/docs`;
+- `/health` endpoint response;
+- GitHub Actions green workflow;
+- Docker Compose running successfully.
+
+## Future Improvements
+
+- Add `pytest-cov` and publish coverage in CI.
+- Add a small model comparison experiment.
+- Add a simple monitoring dashboard or report export.
+- Add screenshots to the final report after manual demonstration.
+
 ## Submission Notes
 
 This repository demonstrates the requested educational MLOps components:
@@ -377,4 +397,4 @@ This repository demonstrates the requested educational MLOps components:
 - monitoring;
 - documentation.
 
-Future improvements could include a richer dashboard, model comparison, and coverage publishing, but those are intentionally outside the current course-demo scope.
+The project is ready for submission after adding the GitHub repository link and any required screenshots to the LMS.
