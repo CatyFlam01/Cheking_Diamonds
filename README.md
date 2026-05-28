@@ -8,6 +8,8 @@
 
 Educational MLOps project for the course "Automation of Machine Learning".
 
+Current version: `1.0.0`
+
 The project demonstrates a complete, reproducible ML workflow for a tabular regression task: predicting diamond price (`price`) from the Kaggle Diamonds dataset.
 
 This is intentionally a course/demo project, not an enterprise production system. The focus is on stability, clarity, local reproducibility, tests, Docker, CI/CD, and explainable project structure.
