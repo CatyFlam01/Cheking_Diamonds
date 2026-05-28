@@ -6,17 +6,17 @@
 [![Docker](https://img.shields.io/badge/docker-compose-blue)](https://docs.docker.com/compose/)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
-Educational MLOps project for the course "Automation of Machine Learning".
+Учебный MLOps-проект по дисциплине "Автоматизация машинного обучения".
 
-Current version: `1.0.0`
+Текущая версия: `1.0.0`
 
-The project demonstrates a complete, reproducible ML workflow for a tabular regression task: predicting diamond price (`price`) from the Kaggle Diamonds dataset.
+Проект демонстрирует полный воспроизводимый ML workflow для табличной задачи регрессии: предсказание цены бриллианта (`price`) по данным Kaggle Diamonds Dataset.
 
-This is a course/demo project, not an enterprise production system. The focus is on stability, clarity, local reproducibility, tests, Docker, CI/CD, and understandable project structure.
+Это учебный проект, а не production enterprise-система. Основной акцент сделан на понятности, стабильности, локальном запуске, тестах, Docker, CI/CD, monitoring и прозрачной структуре репозитория.
 
-## Business Task
+## Бизнес-задача
 
-Predict diamond price using these input features:
+Нужно предсказать стоимость бриллианта по его характеристикам:
 
 - `carat`
 - `cut`
@@ -28,36 +28,37 @@ Predict diamond price using these input features:
 - `y`
 - `z`
 
-Target: `price`
+Целевая переменная: `price`
 
-Task type: regression
+Тип задачи: регрессия
 
-Dataset: [Kaggle Diamonds Dataset](https://www.kaggle.com/datasets/shivam2503/diamonds)
+Датасет: [Kaggle Diamonds Dataset](https://www.kaggle.com/datasets/shivam2503/diamonds)
 
-## Why Diamonds Dataset
+## Почему выбран Diamonds Dataset
 
-- It is a simple and understandable tabular dataset.
-- It contains both numeric and categorical features.
-- It is suitable for regression and easy to explain during a course defense.
-- It allows the project to demonstrate ETL, preprocessing, feature engineering, model training, API, tests, Docker, CI/CD, and monitoring without unnecessary NLP complexity.
+- Датасет простой и хорошо подходит для учебной демонстрации.
+- Данные табличные, есть числовые и категориальные признаки.
+- Целевая переменная понятна: цена бриллианта.
+- На этом датасете удобно показать ETL, preprocessing, feature engineering, model training, FastAPI, tests, Docker, CI/CD и monitoring.
+- В отличие от NLP-задач, проект не перегружается обработкой текста и остается сфокусированным на MLOps.
 
-## Architecture Diagram
+## Архитектурная схема
 
 ```mermaid
 flowchart LR
-    A["Raw data"] --> B["ETL and validation"]
+    A["Raw data"] --> B["ETL и validation"]
     B --> C["Cleaning"]
     C --> D["Feature engineering"]
     D --> E["Train/test split"]
     E --> F["Model training"]
-    F --> G["Metrics and baseline"]
+    F --> G["Metrics и baseline"]
     F --> H["Saved model"]
     H --> I["FastAPI"]
     G --> J["Monitoring"]
     J --> I
 ```
 
-## Pipeline Diagram
+## Схема pipeline
 
 ```mermaid
 flowchart LR
@@ -72,78 +73,78 @@ flowchart LR
     H --> J["FastAPI /predict"]
 ```
 
-## What Is Implemented
+## Что реализовано
 
-- ETL pipeline with validation, cleaning, feature engineering, and processed data output.
-- Real model training with `RandomForestRegressor`.
-- Real metrics calculated after training: RMSE, MAE, R2, MAPE.
-- FastAPI service with health, prediction, and model information endpoints.
-- Lightweight monitoring:
+- ETL pipeline: загрузка данных, validation, cleaning, feature engineering и сохранение обработанных данных.
+- Реальное обучение модели `RandomForestRegressor`.
+- Реальные метрики после обучения: RMSE, MAE, R2, MAPE.
+- FastAPI-приложение с endpoint-ами для health check, prediction и информации о модели.
+- Легкий monitoring:
   - baseline metrics;
-  - numeric data drift;
-  - model degradation detection;
-  - CPU/RAM/disk usage with `psutil`.
-- Tests using small synthetic DataFrames, so the full Kaggle dataset is not required.
-- Docker and Docker Compose configuration.
-- GitHub Actions workflow for tests and Docker image build.
+  - data drift по числовым признакам;
+  - degradation detection;
+  - CPU/RAM/disk usage через `psutil`.
+- Тесты на небольших synthetic DataFrame, поэтому полный Kaggle dataset для проверки не нужен.
+- Docker и Docker Compose.
+- GitHub Actions workflow для тестов и Docker build.
 
-## Project Structure
+## Структура проекта
 
 ```text
 .
-├── data/
-│   ├── raw/
-│   └── processed/
-├── src/
-│   ├── app.py
-│   ├── data_processing.py
-│   ├── infrastructure_monitoring.py
-│   ├── model_training.py
-│   └── monitoring.py
-├── tests/
-│   ├── test_api.py
-│   ├── test_data.py
-│   ├── test_model.py
-│   └── test_monitoring.py
-├── docker/
-│   ├── Dockerfile
-│   └── prometheus.yml
-├── .github/workflows/
-│   └── ci-cd.yml
-├── models/
-├── reports/
-│   ├── figures/
-│   └── monitoring/
-├── presentation/
-│   └── presentation.md
-├── run_pipeline.py
-├── docker-compose.yml
-├── requirements.txt
-└── README.md
+|-- data/
+|   |-- raw/
+|   `-- processed/
+|-- src/
+|   |-- app.py
+|   |-- data_processing.py
+|   |-- infrastructure_monitoring.py
+|   |-- model_training.py
+|   `-- monitoring.py
+|-- tests/
+|   |-- test_api.py
+|   |-- test_data.py
+|   |-- test_model.py
+|   `-- test_monitoring.py
+|-- docker/
+|   |-- Dockerfile
+|   `-- prometheus.yml
+|-- .github/workflows/
+|   `-- ci-cd.yml
+|-- models/
+|-- reports/
+|   |-- figures/
+|   `-- monitoring/
+|-- presentation/
+|   `-- presentation.md
+|-- run_pipeline.py
+|-- docker-compose.yml
+|-- requirements.txt
+`-- README.md
 ```
 
-## Quick Start
+## Быстрый старт
 
-Create and activate a virtual environment on Windows:
+Создать и активировать виртуальное окружение на Windows:
 
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
-Install dependencies:
+Установить зависимости:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the full ML pipeline:
+Запустить полный ML pipeline:
 
 ```bash
 python run_pipeline.py
 ```
 
-Expected output:
+Ожидаемый вывод:
 
 ```text
 Pipeline completed
@@ -153,44 +154,44 @@ r2: 0.9631
 mape: 7.0597
 ```
 
-The exact values can differ if you replace the generated sample data with the full Kaggle dataset.
+Если вместо демонстрационного датасета использовать полный Kaggle CSV, значения метрик могут измениться.
 
-## Dataset Setup
+## Подготовка датасета
 
-For the real Kaggle dataset, place the CSV here:
+Для работы с реальным Kaggle dataset нужно положить CSV-файл сюда:
 
 ```text
 data/raw/diamonds.csv
 ```
 
-If the file is missing, the project automatically creates a small deterministic diamonds-like sample dataset. This keeps tests, Docker builds, and local demos reproducible without manual Kaggle download.
+Если файла нет, проект автоматически создаст небольшой deterministic diamonds-like dataset. Это позволяет запускать тесты, Docker build и локальную демонстрацию без ручной загрузки Kaggle.
 
-## Running ETL
+## Запуск ETL
 
 ```bash
 python -m src.data_processing
 ```
 
-Expected output:
+Ожидаемый вывод:
 
 ```text
 Saved processed train/test data: train=400, test=100
 ```
 
-Generated files:
+Создаваемые файлы:
 
-- `data/raw/diamonds.csv` if no raw dataset existed;
+- `data/raw/diamonds.csv`, если исходного файла не было;
 - `data/processed/train.csv`;
 - `data/processed/test.csv`;
 - `data/processed/diamonds_processed.csv`.
 
-## Training
+## Обучение модели
 
 ```bash
 python -m src.model_training
 ```
 
-Expected output is a JSON object with real metrics:
+Ожидаемый вывод - JSON с реальными метриками:
 
 ```json
 {
@@ -201,34 +202,34 @@ Expected output is a JSON object with real metrics:
 }
 ```
 
-Generated files:
+Создаваемые файлы:
 
 - `models/diamond_price_model.joblib`;
 - `models/metrics.json`;
 - `reports/monitoring/baseline.json`.
 
-## API
+## FastAPI
 
-Start FastAPI locally:
+Запуск API локально:
 
 ```bash
 uvicorn src.app:app --reload
 ```
 
-Open API docs:
+Документация Swagger доступна по адресу:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-Available endpoints:
+Endpoint-ы:
 
-- `GET /` - basic API message.
-- `GET /health` - service and model status plus infrastructure metrics.
-- `POST /predict` - predict diamond price.
-- `GET /model/info` - model path, feature list, and saved metrics.
+- `GET /` - базовая информация об API.
+- `GET /health` - статус сервиса, статус модели и infrastructure metrics.
+- `POST /predict` - предсказание цены бриллианта.
+- `GET /model/info` - путь к модели, список признаков и сохраненные метрики.
 
-Example request body for `POST /predict`:
+Пример запроса для `POST /predict`:
 
 ```json
 {
@@ -244,7 +245,7 @@ Example request body for `POST /predict`:
 }
 ```
 
-Example response:
+Пример ответа:
 
 ```json
 {
@@ -253,23 +254,23 @@ Example response:
 }
 ```
 
-If the model has not been trained yet, `/predict` returns HTTP 503 with an instruction to run training first. Importing the API does not crash when the model is absent.
+Если модель еще не обучена, `/predict` вернет HTTP 503 с подсказкой запустить обучение. При этом импорт FastAPI-приложения не падает без файла модели.
 
-## Tests
+## Тестирование
 
-Run all tests:
+Запуск всех тестов:
 
 ```bash
 pytest -v
 ```
 
-Expected current result:
+Текущий ожидаемый результат:
 
 ```text
 18 passed
 ```
 
-Optional coverage command if `pytest-cov` is installed:
+Опциональная команда для coverage, если установлен `pytest-cov`:
 
 ```bash
 pytest --cov=src --cov-report=term-missing
@@ -277,13 +278,13 @@ pytest --cov=src --cov-report=term-missing
 
 ## Monitoring
 
-Print current infrastructure metrics:
+Проверка infrastructure metrics:
 
 ```bash
 python -m src.infrastructure_monitoring
 ```
 
-Example output:
+Пример вывода:
 
 ```json
 {
@@ -293,108 +294,108 @@ Example output:
 }
 ```
 
-Monitoring is intentionally lightweight and educational. It demonstrates baseline metrics, drift checks, degradation checks, and system resource checks without external services.
+Monitoring в проекте легкий и учебный. Он показывает baseline metrics, drift checks, degradation checks и состояние ресурсов без подключения внешних сервисов.
 
 ## Docker
 
-Build the image:
+Сборка image:
 
 ```bash
 docker compose build
 ```
 
-Run the API:
+Запуск API:
 
 ```bash
 docker compose up
 ```
 
-Expected behavior:
+Ожидаемое поведение:
 
-- the image installs Python dependencies;
-- the image runs ETL and model training during build so the API has a model artifact inside the image;
-- the API starts on port `8000`;
-- docs are available at `http://127.0.0.1:8000/docs`.
+- image устанавливает Python-зависимости;
+- во время build запускаются ETL и model training, поэтому внутри image есть model artifact;
+- API запускается на порту `8000`;
+- Swagger доступен по адресу `http://127.0.0.1:8000/docs`.
 
 ## CI/CD
 
-GitHub Actions workflow:
+GitHub Actions workflow находится здесь:
 
 ```text
 .github/workflows/ci-cd.yml
 ```
 
-It performs:
+Workflow выполняет:
 
-1. repository checkout;
-2. Python setup;
+1. checkout репозитория;
+2. настройку Python;
 3. pip dependency cache;
-4. dependency installation;
-5. Python compile check for `src` and `tests`;
+4. установку зависимостей;
+5. compile check для `src` и `tests`;
 6. `python -m pytest -v`;
 7. Docker image build.
 
-There is no deploy step, cloud integration, or secrets usage. This is intentional for a stable public course repository.
+Deploy, cloud integrations и secrets не добавлены специально: для учебного проекта важнее простой и стабильный workflow.
 
-## Troubleshooting
+## Решение частых проблем
 
 ### `ModuleNotFoundError`
 
-Install dependencies in the active environment:
+Установить зависимости в активном окружении:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### `/predict` returns HTTP 503
+### `/predict` возвращает HTTP 503
 
-Train the model first:
+Сначала обучить модель:
 
 ```bash
 python -m src.model_training
 ```
 
-### Kaggle dataset is missing
+### Нет Kaggle dataset
 
-This is safe. The project will generate a deterministic sample dataset automatically. To use the real data, place `diamonds.csv` in `data/raw/`.
+Это допустимо. Проект автоматически создаст deterministic sample dataset. Для работы с реальным датасетом нужно положить `diamonds.csv` в `data/raw/`.
 
-### Docker build fails because Docker Engine is unavailable
+### Docker build не запускается
 
-Start Docker Desktop, wait until the engine is running, then retry:
+Нужно запустить Docker Desktop, дождаться состояния Engine running и повторить:
 
 ```bash
 docker compose build
 ```
 
-## Manual Screenshots To Add
+## Скриншоты для ручного добавления
 
-Before submitting the project, add screenshots to the report or LMS submission if required:
+Перед сдачей можно добавить в отчет или LMS скриншоты:
 
-- Swagger UI at `/docs`;
-- `/health` endpoint response;
-- GitHub Actions green workflow;
-- Docker Compose running successfully.
+- Swagger UI на `/docs`;
+- ответ endpoint-а `/health`;
+- зеленый GitHub Actions workflow;
+- запущенный Docker Compose.
 
-## Future Improvements
+## Возможные будущие улучшения
 
-- Add `pytest-cov` and publish coverage in CI.
-- Add a small model comparison experiment.
-- Add a simple monitoring dashboard or report export.
-- Add screenshots to the final report after manual demonstration.
+- Добавить `pytest-cov` и публиковать coverage в CI.
+- Добавить сравнение нескольких моделей.
+- Сделать простой monitoring dashboard или экспорт monitoring report.
+- Добавить скриншоты в финальный отчет после ручной демонстрации.
 
-## Submission Notes
+## Статус для сдачи
 
-This repository demonstrates the requested educational MLOps components:
+Проект демонстрирует требуемые учебные MLOps-компоненты:
 
 - ETL;
 - preprocessing;
 - model training;
-- real metrics;
-- API;
+- реальные метрики;
+- FastAPI;
 - tests;
 - Docker;
 - CI/CD;
 - monitoring;
 - documentation.
 
-The project is ready for submission after adding the GitHub repository link and any required screenshots to the LMS.
+Проект готов к сдаче после добавления ссылки на GitHub-репозиторий и нужных скриншотов в LMS.

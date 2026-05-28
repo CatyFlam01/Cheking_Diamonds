@@ -1,46 +1,46 @@
-# Technical Review Report
+# Отчет технического ревью
 
-Date: 2026-05-28
+Дата: 2026-05-28
 
-## Summary
+## Краткий вывод
 
-The project is a working educational MLOps pipeline for the Diamonds regression task. It contains ETL, feature engineering, model training, FastAPI inference, tests, Docker configuration, CI/CD workflow, documentation, presentation notes, and basic monitoring.
+Проект представляет собой рабочий учебный MLOps pipeline для задачи регрессии на Diamonds dataset. В репозитории есть ETL, feature engineering, model training, FastAPI, tests, Docker, CI/CD, documentation, presentation и базовый monitoring.
 
-The current implementation is suitable for course submission. The remaining work is manual submission preparation: add the GitHub repository link to the LMS and attach screenshots if required by the teacher.
+Текущая реализация подходит для сдачи учебного проекта. Оставшиеся действия относятся к ручной подготовке сдачи: добавить ссылку на GitHub-репозиторий в LMS и приложить скриншоты, если это требуется преподавателем.
 
-## Findings
+## Найденные вопросы и статус
 
-| Area | Criticality | Finding | Recommended action |
+| Область | Критичность | Результат проверки | Рекомендация |
 | --- | --- | --- | --- |
-| README | Low | README matches the code and includes commands, diagrams, metrics, Docker, API, monitoring, troubleshooting, screenshots to add, and future improvements. | Keep metrics updated if the dataset changes. |
-| API | Low | FastAPI endpoints include response models, examples, validation, and graceful 503 behavior when the model is missing. | No blocking action. |
-| Tests | Low | Tests exercise real code paths and edge cases. Current result: `18 passed`. | Optional future improvement: add coverage reporting. |
-| Docker | Low | Dockerfile and Docker Compose are simple and validated in final checks. | Keep Docker Desktop running for demonstrations. |
-| CI/CD | Low | GitHub Actions is green and runs dependency install, compile check, tests, and Docker build. | Monitor workflow after future pushes. |
-| Monitoring | Low | Monitoring covers baseline profiles, drift, degradation, and infrastructure metrics. It is intentionally simple and not fake. | Document that it is lightweight educational monitoring, not production observability. |
-| Dependencies | Low | Dependency ranges are reasonable for current Python 3.13 and CI Python 3.11, with no obvious unused heavy libraries. | Keep requirements small and avoid optional MLflow/Prometheus SDK dependencies. |
-| Paths | Low | Project paths are derived from `Path(__file__)`, so there is no machine-specific hardcoded path in code. | Keep path constants centralized. |
-| Missing artifacts | Low | API imports safely when model is absent. `/predict` returns 503 when no model is available. | Add an explicit test for this scenario. |
-| Presentation | Low | `presentation/presentation.md` contains 7 clear slides for a course defense. | No blocking action. |
+| README | Low | README соответствует коду, содержит команды, диаграммы, метрики, Docker, API, monitoring, troubleshooting, screenshots to add и future improvements. | Обновлять метрики, если будет использован другой датасет. |
+| API | Low | FastAPI endpoints имеют response models, examples, validation и корректное поведение HTTP 503, если модель отсутствует. | Блокирующих действий нет. |
+| Tests | Low | Тесты проверяют реальные участки кода и edge cases. Текущий результат: `18 passed`. | В будущем можно добавить coverage report. |
+| Docker | Low | Dockerfile и Docker Compose простые, корректные и проверены в финальных проверках. | Для демонстрации держать Docker Desktop запущенным. |
+| CI/CD | Low | GitHub Actions зеленый, выполняет установку зависимостей, compile check, tests и Docker build. | После новых push проверять статус workflow. |
+| Monitoring | Low | Monitoring покрывает baseline profiles, drift, degradation и infrastructure metrics. Реализация простая и не фейковая. | Документировать как учебный lightweight monitoring, не production observability. |
+| Dependencies | Low | Зависимости разумные, без лишних тяжелых библиотек. | Не добавлять MLflow/Prometheus SDK без необходимости. |
+| Paths | Low | Пути строятся через `Path(__file__)`, machine-specific hardcode в коде нет. | Оставлять path constants централизованными. |
+| Missing artifacts | Low | API импортируется без модели, `/predict` возвращает HTTP 503 при отсутствии model artifact. | Поведение покрыто тестами. |
+| Presentation | Low | `presentation/presentation.md` содержит 7 понятных слайдов для защиты. | Блокирующих действий нет. |
 
-## What Is Already Good
+## Что уже хорошо
 
-- Metrics are computed after real model training and are not hardcoded.
-- ETL can run without the Kaggle CSV by generating a reproducible sample dataset.
-- Tests use small synthetic DataFrames and do not require a full external dataset.
-- FastAPI does not crash on import when the model artifact is missing.
-- Docker and CI/CD are intentionally simple and appropriate for a course project.
-- `.gitignore` excludes generated CSV, model, and monitoring artifacts while keeping folder structure.
-- Docker, API, and GitHub Actions were checked successfully before final submission.
+- Метрики вычисляются после реального обучения модели и не захардкожены.
+- ETL может запускаться без полного Kaggle CSV за счет deterministic sample dataset.
+- Тесты используют маленькие synthetic DataFrame и не требуют внешнего датасета.
+- FastAPI не падает при импорте, если model artifact отсутствует.
+- Docker и CI/CD остаются простыми и уместными для учебного проекта.
+- `.gitignore` исключает generated CSV, model artifacts и monitoring artifacts, но сохраняет структуру папок.
+- Docker, API и GitHub Actions проверены успешно перед финальной сдачей.
 
-## Risks Before Submission
+## Остаточные риски
 
-- If the full Kaggle dataset is used instead of the demo dataset, model metrics should be regenerated.
-- Screenshots for Swagger, `/health`, Docker Compose, and GitHub Actions should be added manually if the LMS/report requires them.
+- Если использовать полный Kaggle dataset вместо demonstration dataset, метрики модели нужно пересчитать.
+- Скриншоты Swagger, `/health`, Docker Compose и GitHub Actions нужно добавить вручную, если они требуются в LMS или отчете.
 
-## Recommended Next Steps
+## Рекомендуемые финальные шаги
 
-1. Push the final commits to GitHub.
-2. Confirm the GitHub Actions workflow remains green.
-3. Add the GitHub repository link to the LMS.
-4. Attach manual screenshots if required by the teacher.
+1. Запушить финальные коммиты в GitHub.
+2. Убедиться, что GitHub Actions workflow остается зеленым.
+3. Добавить ссылку на GitHub-репозиторий в LMS.
+4. Приложить ручные скриншоты, если это требуется преподавателем.

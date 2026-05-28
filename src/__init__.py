@@ -1,1 +1,1 @@
-"""Training and API package for the Diamonds MLOps project."""
+"""Пакет обучения модели и FastAPI для Diamonds MLOps project."""

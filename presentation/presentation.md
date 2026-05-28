@@ -1,10 +1,10 @@
-# Automation ML Diamonds - Presentation
+# Automation ML Diamonds - презентация
 
-## Slide 1. Business Task
+## Слайд 1. Бизнес-задача
 
-Goal: predict the price of a diamond from its physical and quality characteristics.
+Цель проекта - предсказать цену бриллианта по его физическим и качественным характеристикам.
 
-Input features:
+Входные признаки:
 
 - carat;
 - cut;
@@ -12,27 +12,27 @@ Input features:
 - clarity;
 - depth;
 - table;
-- x, y, z dimensions.
+- размеры x, y, z.
 
-Target: `price`
+Целевая переменная: `price`
 
-This is a regression task.
+Тип задачи: регрессия.
 
-## Slide 2. Data
+## Слайд 2. Данные
 
-Dataset: Kaggle Diamonds Dataset.
+Датасет: Kaggle Diamonds Dataset.
 
-Why this dataset was chosen:
+Почему выбран этот датасет:
 
-- simple tabular data;
-- clear regression target;
-- numeric and categorical features;
-- easy to explain during a course defense;
-- suitable for demonstrating ETL, preprocessing, API, testing, Docker, CI/CD, and monitoring.
+- простые табличные данные;
+- понятная целевая переменная;
+- есть числовые и категориальные признаки;
+- удобно объяснять на защите учебного проекта;
+- подходит для демонстрации ETL, preprocessing, API, testing, Docker, CI/CD и monitoring.
 
-If the full Kaggle CSV is missing, the project creates a deterministic sample dataset for local demo and tests.
+Если полный Kaggle CSV отсутствует, проект создает deterministic sample dataset для локального запуска и тестов.
 
-## Slide 3. ML System Architecture
+## Слайд 3. Архитектура ML-системы
 
 ```text
 Raw CSV
@@ -54,70 +54,70 @@ density = carat / (volume + 0.001)
 depth_to_width = depth / (x + 0.001)
 ```
 
-## Slide 4. Model And Metrics
+## Слайд 4. Модель и метрики
 
-Model: `RandomForestRegressor`
+Модель: `RandomForestRegressor`
 
-Why this model:
+Почему эта модель:
 
-- stable baseline for tabular regression;
-- handles non-linear relationships;
-- easy to explain;
-- does not require heavy optional dependencies.
+- стабильный baseline для tabular regression;
+- умеет учитывать нелинейные зависимости;
+- легко объясняется;
+- не требует тяжелых дополнительных зависимостей.
 
-Current demo metrics:
+Текущие демонстрационные метрики:
 
-| Metric | Value |
+| Метрика | Значение |
 | --- | ---: |
 | RMSE | 589.5855 |
 | MAE | 483.1370 |
 | R2 | 0.9631 |
 | MAPE | 7.0597 |
 
-Metrics are calculated after real model training and are not hardcoded.
+Метрики вычисляются после реального обучения модели и не захардкожены.
 
-## Slide 5. Testing, Docker, CI/CD
+## Слайд 5. Тестирование, Docker, CI/CD
 
-Testing:
+Тестирование:
 
 - `18 passed`;
-- tests use small synthetic DataFrames;
-- tests cover ETL, feature engineering, model training, API behavior, and monitoring.
+- тесты используют небольшие synthetic DataFrame;
+- проверяются ETL, feature engineering, model training, API behavior и monitoring.
 
 Docker:
 
 - `docker compose build`;
 - `docker compose up`;
-- API runs on port `8000`.
+- API работает на порту `8000`.
 
 CI/CD:
 
-- GitHub Actions installs dependencies;
-- compiles source files;
-- runs pytest;
-- builds Docker image.
+- GitHub Actions устанавливает зависимости;
+- выполняет compile check;
+- запускает pytest;
+- собирает Docker image.
 
-## Slide 6. Monitoring
+## Слайд 6. Мониторинг
 
-Monitoring is intentionally lightweight and educational:
+Monitoring в проекте легкий и учебный:
 
 - baseline model metrics;
 - numeric feature profiles;
-- data drift detection by relative mean shift;
-- degradation detection by RMSE increase and R2 drop;
-- CPU, RAM, and disk usage with `psutil`.
+- data drift detection по сдвигу среднего значения;
+- degradation detection по росту RMSE и падению R2;
+- CPU, RAM и disk usage через `psutil`.
 
-This demonstrates the core monitoring ideas without adding heavy infrastructure.
+Этого достаточно, чтобы показать основные идеи monitoring без тяжелой инфраструктуры.
 
-## Slide 7. Business Conclusion
+## Слайд 7. Выводы для бизнеса
 
-The project shows a complete educational ML automation workflow:
+Проект показывает полный учебный workflow автоматизации ML:
 
-- data processing is reproducible;
-- model metrics are real;
-- predictions are available through FastAPI;
-- tests and CI/CD reduce manual checking;
-- Docker makes the demo easier to reproduce;
-- monitoring provides basic visibility into model and infrastructure state.
+- обработка данных воспроизводима;
+- метрики модели реальные;
+- предсказания доступны через FastAPI;
+- tests и CI/CD уменьшают объем ручной проверки;
+- Docker упрощает повторный запуск;
+- monitoring дает базовую видимость состояния модели и инфраструктуры.
 
-The project is ready for course submission after adding the GitHub link and required screenshots to the LMS.
+Проект готов к сдаче после добавления ссылки на GitHub и нужных скриншотов в LMS.

@@ -35,7 +35,7 @@ FEATURE_COLUMNS = NUMERIC_FEATURES + CATEGORICAL_FEATURES + ENGINEERED_FEATURES
 
 
 def build_model(random_state: int = 42) -> Pipeline:
-    """Build a preprocessing and regression pipeline."""
+    """Собрать preprocessing и regression pipeline для обучения."""
     numeric_features = NUMERIC_FEATURES + ENGINEERED_FEATURES
     numeric_pipeline = Pipeline(
         steps=[
@@ -65,7 +65,7 @@ def build_model(random_state: int = 42) -> Pipeline:
 
 
 def calculate_metrics(y_true: pd.Series | np.ndarray, y_pred: np.ndarray) -> dict[str, float]:
-    """Calculate regression metrics from real predictions."""
+    """Рассчитать regression metrics по реальным предсказаниям."""
     rmse = float(np.sqrt(mean_squared_error(y_true, y_pred)))
     mae = float(mean_absolute_error(y_true, y_pred))
     r2 = float(r2_score(y_true, y_pred))
@@ -75,7 +75,7 @@ def calculate_metrics(y_true: pd.Series | np.ndarray, y_pred: np.ndarray) -> dic
 
 
 def load_processed_data(processed_dir: Path | str = PROCESSED_DIR) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Load processed train/test data, generating it first if needed."""
+    """Загрузить processed train/test data, создав их при необходимости."""
     processed_dir = Path(processed_dir)
     train_path = processed_dir / "train.csv"
     test_path = processed_dir / "test.csv"
@@ -112,7 +112,7 @@ def train_model(
 
 
 def load_model(path: Path | str = MODEL_PATH) -> Any | None:
-    """Load a trained model artifact if it exists."""
+    """Загрузить trained model artifact, если он существует."""
     path = Path(path)
     if not path.exists():
         return None

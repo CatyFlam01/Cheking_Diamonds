@@ -1,29 +1,29 @@
-# Final Validation Report
+# Финальный отчет проверки
 
-Date: 2026-05-28
+Дата: 2026-05-28
 
-## Validation Summary
+## Краткий итог
 
-The project was reviewed, polished, and validated as an educational MLOps system for the Diamonds regression task. The core local workflow works: ETL, model training, full pipeline execution, tests, monitoring command, FastAPI endpoints, Docker, and GitHub Actions.
+Проект проверен и подготовлен как учебная MLOps-система для задачи регрессии на Diamonds dataset. Основной локальный workflow работает: ETL, model training, полный pipeline, tests, monitoring command, FastAPI endpoints, Docker и GitHub Actions.
 
-## Checked Commands
+## Проверенные команды
 
-| Command | Result | Notes |
+| Команда | Результат | Примечание |
 | --- | --- | --- |
-| `python -m src.data_processing` | Passed | Processed train/test files were generated. Output: `train=400, test=100`. |
-| `python -m src.model_training` | Passed | Model artifact and metrics were generated. |
-| `python run_pipeline.py` | Passed | Full ETL + training pipeline completed. |
+| `python -m src.data_processing` | Passed | Сформированы processed train/test файлы. Вывод: `train=400, test=100`. |
+| `python -m src.model_training` | Passed | Созданы model artifact и metrics. |
+| `python run_pipeline.py` | Passed | Полный ETL + training pipeline завершился успешно. |
 | `python -m pytest -v` | Passed | `18 passed`. |
-| `python -m src.infrastructure_monitoring` | Passed | CPU, RAM, and disk usage metrics returned as JSON. |
-| `uvicorn src.app:app --reload` | Passed | API started through a background PowerShell job and `/health` returned HTTP 200 JSON. |
-| `docker compose config` | Passed | Compose configuration is valid. |
-| `docker compose build` | Passed | Docker image builds successfully when Docker Desktop is running. |
-| `docker compose up` | Passed | FastAPI starts in the container and remains running. |
-| GitHub Actions | Passed | Workflow completed successfully with green status. |
+| `python -m src.infrastructure_monitoring` | Passed | CPU, RAM и disk usage возвращаются в JSON. |
+| `uvicorn src.app:app --reload` | Passed | API запускался локально, `/health` возвращал HTTP 200 JSON. |
+| `docker compose config` | Passed | Docker Compose configuration валидна. |
+| `docker compose build` | Passed | Docker image собирается при запущенном Docker Desktop. |
+| `docker compose up` | Passed | FastAPI запускается в контейнере и продолжает работать. |
+| GitHub Actions | Passed | Workflow завершился успешно, статус зеленый. |
 
-## Latest Model Metrics
+## Последние метрики модели
 
-Metrics are computed from actual model predictions on the generated deterministic sample dataset.
+Метрики рассчитаны по реальным предсказаниям модели на deterministic sample dataset.
 
 ```json
 {
@@ -34,34 +34,34 @@ Metrics are computed from actual model predictions on the generated deterministi
 }
 ```
 
-## What Works
+## Что работает
 
-- ETL pipeline runs without the full Kaggle dataset.
-- Feature engineering creates `volume`, `density`, and `depth_to_width`.
-- Model training saves `models/diamond_price_model.joblib`.
-- Metrics are real and saved to `models/metrics.json`.
-- Monitoring baseline is saved to `reports/monitoring/baseline.json`.
-- FastAPI imports safely when model artifacts are missing.
-- `/predict` validates input and returns HTTP 503 if the model is unavailable.
-- Tests cover success paths and important edge cases.
-- README, review report, changelog, license, and presentation notes are present.
-- Docker, API, and GitHub Actions were checked successfully.
-- GitHub Actions workflow is suitable for a public educational repository.
+- ETL pipeline запускается без полного Kaggle dataset.
+- Feature engineering создает `volume`, `density` и `depth_to_width`.
+- Model training сохраняет `models/diamond_price_model.joblib`.
+- Метрики реальные и сохраняются в `models/metrics.json`.
+- Monitoring baseline сохраняется в `reports/monitoring/baseline.json`.
+- FastAPI безопасно импортируется даже без model artifact.
+- `/predict` валидирует входные данные и возвращает HTTP 503, если модель недоступна.
+- Tests покрывают основные success paths и важные edge cases.
+- README, review report, changelog, license и presentation notes присутствуют.
+- Docker, API и GitHub Actions проверены успешно.
+- GitHub Actions workflow подходит для публичного учебного репозитория.
 
-## What Requires Manual Verification
+## Что требует ручной проверки
 
-- If the full Kaggle dataset is used, model metrics should be regenerated and README/presentation metrics may need updating.
-- Add the GitHub repository link to the LMS.
-- Add manual screenshots if the final report or LMS submission requires them.
+- Если будет использован полный Kaggle dataset, нужно заново обучить модель и обновить метрики в README/presentation.
+- Добавить ссылку на GitHub-репозиторий в LMS.
+- Добавить ручные скриншоты, если они требуются в финальном отчете или LMS.
 
-## Ready For Submission
+## Готовность к сдаче
 
-The repository is ready for course demonstration as a stable educational MLOps project. It includes:
+Репозиторий готов для демонстрации как стабильный учебный MLOps-проект. Он включает:
 
 - ETL;
 - preprocessing;
 - model training;
-- real metrics;
+- реальные метрики;
 - FastAPI;
 - tests;
 - Docker configuration;
@@ -72,11 +72,11 @@ The repository is ready for course demonstration as a stable educational MLOps p
 - presentation notes;
 - final validation report.
 
-The project is ready for submission after adding the repository link to the LMS.
+Проект готов к сдаче после добавления ссылки на репозиторий в LMS.
 
-## Future Improvements
+## Возможные будущие улучшения
 
-- Add `pytest-cov` and publish coverage in CI.
-- Add a small model comparison experiment.
-- Add a simple monitoring dashboard or report export.
-- Add screenshots from FastAPI docs after Docker validation.
+- Добавить `pytest-cov` и публиковать coverage в CI.
+- Добавить небольшое сравнение нескольких моделей.
+- Сделать простой monitoring dashboard или экспорт monitoring report.
+- Добавить скриншоты FastAPI docs и Docker Compose в финальный отчет.

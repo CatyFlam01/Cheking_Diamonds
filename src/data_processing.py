@@ -20,7 +20,7 @@ REQUIRED_COLUMNS = NUMERIC_FEATURES + CATEGORICAL_FEATURES + [TARGET]
 
 
 def generate_sample_data(rows: int = 500, random_state: int = 42) -> pd.DataFrame:
-    """Create a small realistic diamonds-like dataset for demos and tests."""
+    """Создать небольшой diamonds-like датасет для демо и тестов."""
     rng = np.random.default_rng(random_state)
     carat = rng.uniform(0.2, 2.5, rows).round(2)
     x = (4.0 + carat * 2.2 + rng.normal(0, 0.15, rows)).clip(3.0, None)
@@ -66,7 +66,7 @@ def generate_sample_data(rows: int = 500, random_state: int = 42) -> pd.DataFram
 
 
 def load_raw_data(path: Path | str = RAW_DATA_PATH, create_if_missing: bool = True) -> pd.DataFrame:
-    """Load raw diamonds data or create a deterministic demo dataset."""
+    """Загрузить raw diamonds data или создать детерминированный demo dataset."""
     path = Path(path)
     if path.exists():
         return pd.read_csv(path)
@@ -80,7 +80,7 @@ def load_raw_data(path: Path | str = RAW_DATA_PATH, create_if_missing: bool = Tr
 
 
 def validate_data(data: pd.DataFrame, required_columns: Iterable[str] = REQUIRED_COLUMNS) -> None:
-    """Validate required columns, non-empty rows, and numeric data types."""
+    """Проверить обязательные колонки, непустые строки и числовые типы данных."""
     missing = set(required_columns) - set(data.columns)
     if missing:
         raise ValueError(f"Missing required columns: {sorted(missing)}")
@@ -94,7 +94,7 @@ def validate_data(data: pd.DataFrame, required_columns: Iterable[str] = REQUIRED
 
 
 def clean_data(data: pd.DataFrame) -> pd.DataFrame:
-    """Remove duplicates, missing values, and invalid physical measurements."""
+    """Удалить дубликаты, пропуски и некорректные физические измерения."""
     cleaned = data.copy()
     cleaned = cleaned.drop_duplicates()
     cleaned = cleaned.dropna(subset=REQUIRED_COLUMNS)
@@ -109,7 +109,7 @@ def clean_data(data: pd.DataFrame) -> pd.DataFrame:
 
 
 def add_features(data: pd.DataFrame) -> pd.DataFrame:
-    """Add simple domain features used by both training and inference."""
+    """Добавить domain features, используемые при обучении и inference."""
     featured = data.copy()
     featured["volume"] = featured["x"] * featured["y"] * featured["z"]
     featured["density"] = featured["carat"] / (featured["volume"] + 0.001)

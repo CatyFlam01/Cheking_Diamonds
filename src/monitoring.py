@@ -23,7 +23,7 @@ def _numeric_profile(data: pd.DataFrame) -> dict[str, dict[str, float]]:
 
 
 def save_baseline(data: pd.DataFrame, metrics: dict[str, float], path: Path | str) -> dict[str, Any]:
-    """Persist model metrics and numeric feature profile as a monitoring baseline."""
+    """Сохранить model metrics и numeric feature profile как monitoring baseline."""
     baseline = {
         "metrics": metrics,
         "numeric_profile": _numeric_profile(data),
@@ -36,7 +36,7 @@ def save_baseline(data: pd.DataFrame, metrics: dict[str, float], path: Path | st
 
 
 def load_baseline(path: Path | str) -> dict[str, Any] | None:
-    """Load a saved monitoring baseline if available."""
+    """Загрузить сохраненный monitoring baseline, если он доступен."""
     path = Path(path)
     if not path.exists():
         return None
@@ -100,7 +100,7 @@ def detect_degradation(
 
 
 def get_infrastructure_metrics() -> dict[str, float]:
-    """Return current CPU, memory, and disk usage percentages."""
+    """Вернуть текущую загрузку CPU, memory и disk в процентах."""
     disk = psutil.disk_usage("/")
     memory = psutil.virtual_memory()
     return {
