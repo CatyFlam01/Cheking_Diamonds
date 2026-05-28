@@ -203,6 +203,17 @@ cython_debug/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py
 
+# Project artifacts
+data/raw/*.csv
+data/processed/*.csv
+models/*.joblib
+models/*.json
+reports/monitoring/*.json
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!models/.gitkeep
+!reports/monitoring/.gitkeep
+
 # Ruff stuff:
 .ruff_cache/
 
