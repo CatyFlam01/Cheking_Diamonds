@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
+    environment:
+      APP_ENV: demo
     ports:
       - "8000:8000"
-    volumes:
-      - ./models:/app/models
-      - ./reports:/app/reports
+    restart: unless-stopped

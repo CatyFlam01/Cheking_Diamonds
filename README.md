@@ -304,7 +304,7 @@ docker compose up
 Expected behavior:
 
 - the image installs Python dependencies;
-- the image runs ETL and model training during build so the API has a model artifact;
+- the image runs ETL and model training during build so the API has a model artifact inside the image;
 - the API starts on port `8000`;
 - docs are available at `http://127.0.0.1:8000/docs`.
 
