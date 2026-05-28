@@ -322,9 +322,11 @@ It performs:
 
 1. repository checkout;
 2. Python setup;
-3. dependency installation;
-4. `pytest -v`;
-5. Docker image build.
+3. pip dependency cache;
+4. dependency installation;
+5. Python compile check for `src` and `tests`;
+6. `python -m pytest -v`;
+7. Docker image build.
 
 There is no deploy step, cloud integration, or secrets usage. This is intentional for a stable public course repository.
 
