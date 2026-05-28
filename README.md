@@ -240,7 +240,7 @@ pytest -v
 Expected current result:
 
 ```text
-11 passed
+18 passed
 ```
 
 The tests cover:
@@ -260,6 +260,12 @@ Optional coverage command if `pytest-cov` is installed:
 ```bash
 pytest --cov=src --cov-report=term-missing
 ```
+
+Recommended coverage scope:
+
+- keep synthetic tests small and deterministic;
+- cover ETL, feature engineering, API success/failure paths, training, and monitoring;
+- avoid requiring the full Kaggle CSV in CI.
 
 ## Monitoring
 

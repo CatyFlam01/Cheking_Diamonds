@@ -14,6 +14,7 @@ def test_health_endpoint_does_not_require_model():
 
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
+    assert "infrastructure" in response.json()
 
 
 def test_predict_endpoint_returns_prediction(tmp_path, monkeypatch):
@@ -44,6 +45,49 @@ def test_predict_endpoint_returns_prediction(tmp_path, monkeypatch):
 
     assert response.status_code == 200
     assert response.json()["predicted_price"] > 0
+    assert response.json()["message"] == "Prediction completed successfully."
+
+
+def test_predict_endpoint_returns_503_without_model(monkeypatch):
+    monkeypatch.setattr(app_module, "model", None)
+    monkeypatch.setattr(app_module, "load_model", lambda: None)
+
+    response = client.post(
+        "/predict",
+        json={
+            "carat": 1.0,
+            "cut": "Ideal",
+            "color": "E",
+            "clarity": "VS1",
+            "depth": 61.0,
+            "table": 57.0,
+            "x": 6.0,
+            "y": 6.1,
+            "z": 3.8,
+        },
+    )
+
+    assert response.status_code == 503
+    assert "Model is not trained yet" in response.json()["detail"]
+
+
+def test_predict_endpoint_validates_positive_numeric_fields():
+    response = client.post(
+        "/predict",
+        json={
+            "carat": -1.0,
+            "cut": "Ideal",
+            "color": "E",
+            "clarity": "VS1",
+            "depth": 61.0,
+            "table": 57.0,
+            "x": 6.0,
+            "y": 6.1,
+            "z": 3.8,
+        },
+    )
+
+    assert response.status_code == 422
 
 
 def test_model_info_endpoint():
@@ -51,3 +95,4 @@ def test_model_info_endpoint():
 
     assert response.status_code == 200
     assert "features" in response.json()
+    assert "message" in response.json()
