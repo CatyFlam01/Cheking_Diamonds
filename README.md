@@ -185,6 +185,36 @@ Saved processed train/test data: train=400, test=100
 - `data/processed/test.csv`;
 - `data/processed/diamonds_processed.csv`.
 
+## ETL Pipeline
+
+### Extract
+
+- Загрузка diamonds dataset из `data/raw/diamonds.csv`.
+- Источник данных: [Kaggle Diamonds Dataset](https://www.kaggle.com/datasets/shivam2503/diamonds).
+- Если CSV отсутствует, создается deterministic sample dataset для воспроизводимого локального запуска.
+- На этапе validation проверяются обязательные колонки, непустой датасет и числовые типы данных для numeric features.
+
+### Transform
+
+- Удаляются дубликаты и строки с пропусками в обязательных колонках.
+- Отфильтровываются некорректные физические значения: неположительные `carat`, `price`, `x`, `y`, `z`, `depth`, `table`.
+- Добавляется feature engineering:
+  - `volume = x * y * z`;
+  - `density = carat / (volume + 0.001)`;
+  - `depth_to_width = depth / (x + 0.001)`.
+- В ML pipeline выполняется preprocessing:
+  - median imputation и scaling для numeric features;
+  - most-frequent imputation и one-hot encoding для categorical features;
+  - train/test split с фиксированным `random_state`.
+
+### Load
+
+- Processed dataset сохраняется в `data/processed/`.
+- Trained model artifact сохраняется в `models/diamond_price_model.joblib`.
+- Metrics сохраняются в `models/metrics.json`.
+- Monitoring baseline сохраняется в `reports/monitoring/baseline.json`.
+- Визуализации для отчета генерируются в `reports/figures/`.
+
 ## Обучение модели
 
 ```bash
@@ -356,6 +386,19 @@ Workflow выполняет:
 7. Docker image build.
 
 Deploy, cloud integrations и secrets не добавлены специально: для проекта выбран простой и стабильный workflow без внешней инфраструктуры.
+
+## Git workflow
+
+Для работы с репозиторием использовался стандартный Git workflow:
+
+```bash
+git status
+git add .
+git commit -m "..."
+git push origin main
+```
+
+Эти команды позволяют проверить состояние рабочей директории, добавить изменения, зафиксировать их в истории и отправить проект в GitHub-репозиторий.
 
 ## Решение частых проблем
 
