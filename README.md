@@ -208,6 +208,26 @@ python -m src.model_training
 - `models/metrics.json`;
 - `reports/monitoring/baseline.json`.
 
+## Визуализации
+
+Графики для отчета находятся в `reports/figures/`. Их можно пересоздать командой:
+
+```bash
+python -m src.visualization
+```
+
+![Распределение цены бриллиантов](reports/figures/price_distribution.png)
+
+`price_distribution.png` показывает распределение целевой переменной `price` и помогает оценить диапазон цен в используемом датасете.
+
+![Predicted vs Actual](reports/figures/predicted_vs_actual.png)
+
+`predicted_vs_actual.png` сравнивает реальные значения `price` с предсказаниями модели. Чем ближе точки к пунктирной диагонали, тем точнее модель.
+
+![Feature importance](reports/figures/feature_importance.png)
+
+`feature_importance.png` показывает наиболее важные признаки для `RandomForestRegressor`. В текущем запуске наибольший вклад дают `carat`, `volume` и размерные признаки.
+
 ## FastAPI
 
 Запуск API локально:

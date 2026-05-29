@@ -76,6 +76,16 @@ depth_to_width = depth / (x + 0.001)
 
 Метрики вычисляются после реального обучения модели и не захардкожены.
 
+Графики для интерпретации модели:
+
+![Predicted vs Actual](../reports/figures/predicted_vs_actual.png)
+
+Predicted vs Actual показывает, насколько близки предсказания модели к реальным значениям цены.
+
+![Feature importance](../reports/figures/feature_importance.png)
+
+Feature importance показывает, какие признаки сильнее всего влияют на предсказание `RandomForestRegressor`.
+
 ## Слайд 5. Тестирование, Docker, CI/CD
 
 Тестирование:
@@ -108,6 +118,10 @@ Monitoring в проекте легкий и встроенный:
 - CPU, RAM и disk usage через `psutil`.
 
 Этого достаточно, чтобы показать основные идеи monitoring без тяжелой инфраструктуры.
+
+![Распределение цены](../reports/figures/price_distribution.png)
+
+Распределение `price` помогает контролировать диапазон данных и замечать возможные сдвиги в новых выборках.
 
 ## Слайд 7. Выводы для бизнеса
 
