@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this educational MLOps project are documented here.
+All notable changes to this MLOps project are documented here.
 
 ## 1.0.0 - 2026-05-28
 
@@ -14,4 +14,4 @@ All notable changes to this educational MLOps project are documented here.
 - Pytest suite for data processing, model training, API behavior, and monitoring.
 - Dockerfile and Docker Compose configuration.
 - GitHub Actions workflow for dependency installation, compile check, tests, and Docker build.
-- README, technical review report, and project structure for course submission.
+- README, technical review report, and project structure documentation.

@@ -66,7 +66,7 @@ def generate_sample_data(rows: int = 500, random_state: int = 42) -> pd.DataFram
 
 
 def load_raw_data(path: Path | str = RAW_DATA_PATH, create_if_missing: bool = True) -> pd.DataFrame:
-    """Загрузить raw diamonds data или создать детерминированный demo dataset."""
+    """Загрузить raw diamonds data или создать детерминированный sample dataset."""
     path = Path(path)
     if path.exists():
         return pd.read_csv(path)

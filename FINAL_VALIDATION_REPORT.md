@@ -4,7 +4,7 @@
 
 ## Краткий итог
 
-Проект проверен и подготовлен как учебная MLOps-система для задачи регрессии на Diamonds dataset. Основной локальный workflow работает: ETL, model training, полный pipeline, tests, monitoring command, FastAPI endpoints, Docker и GitHub Actions.
+Проект проверен и подготовлен как MLOps-система для задачи регрессии на Diamonds dataset. Основной локальный workflow работает: ETL, model training, полный pipeline, tests, monitoring command, FastAPI endpoints, Docker и GitHub Actions.
 
 ## Проверенные команды
 
@@ -46,17 +46,17 @@
 - Tests покрывают основные success paths и важные edge cases.
 - README, review report, changelog, license и presentation notes присутствуют.
 - Docker, API и GitHub Actions проверены успешно.
-- GitHub Actions workflow подходит для публичного учебного репозитория.
+- GitHub Actions workflow подходит для публичного репозитория.
 
 ## Что требует ручной проверки
 
 - Если будет использован полный Kaggle dataset, нужно заново обучить модель и обновить метрики в README/presentation.
-- Добавить ссылку на GitHub-репозиторий в LMS.
-- Добавить ручные скриншоты, если они требуются в финальном отчете или LMS.
+- Добавить ссылку на GitHub-репозиторий во внешнее описание проекта.
+- Добавить ручные скриншоты, если они требуются в финальной документации.
 
-## Готовность к сдаче
+## Готовность к публикации
 
-Репозиторий готов для демонстрации как стабильный учебный MLOps-проект. Он включает:
+Репозиторий готов для публикации как стабильный MLOps-проект. Он включает:
 
 - ETL;
 - preprocessing;
@@ -72,11 +72,11 @@
 - presentation notes;
 - final validation report.
 
-Проект готов к сдаче после добавления ссылки на репозиторий в LMS.
+Проект готов к публикации после добавления ссылки на репозиторий во внешнюю документацию.
 
 ## Возможные будущие улучшения
 
 - Добавить `pytest-cov` и публиковать coverage в CI.
 - Добавить небольшое сравнение нескольких моделей.
 - Сделать простой monitoring dashboard или экспорт monitoring report.
-- Добавить скриншоты FastAPI docs и Docker Compose в финальный отчет.
+- Добавить скриншоты FastAPI docs и Docker Compose в финальную документацию.
