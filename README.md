@@ -73,6 +73,12 @@ flowchart LR
     H --> J["FastAPI /predict"]
 ```
 
+## Автоматизация ML pipeline
+
+Для задачи регрессии на табличных данных выбран `RandomForestRegressor` как стабильный baseline. Автоматизация реализована через единый `sklearn Pipeline` с `ColumnTransformer`: numeric и categorical features обрабатываются единообразно, а preprocessing становится частью обучаемого pipeline.
+
+Такой подход обеспечивает воспроизводимость, уменьшает риск расхождения между training и inference и упрощает поддержку модели. При обучении pipeline выполняет imputation, scaling, encoding и fit модели; при inference тот же pipeline применяет сохраненную preprocessing-логику перед prediction.
+
 ## Что реализовано
 
 - ETL pipeline: загрузка данных, validation, cleaning, feature engineering и сохранение обработанных данных.
